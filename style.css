@@ -1,0 +1,326 @@
+/* ============================================================
+   e39.540i — design tokens
+   Direction: instrument-cluster / build-sheet, not "car blog".
+   Dark graphite chassis, brushed-steel type, one thin tri-stripe
+   used exactly once as the signature (nod to a stripe on the trunk,
+   not a logo).
+   ============================================================ */
+
+:root {
+  /* color */
+  --bg: #0b0d10;
+  --bg-elevated: #14171c;
+  --bg-elevated-2: #191d23;
+  --border: #23282f;
+  --border-strong: #343b45;
+  --text: #eceef1;
+  --text-muted: #8b929b;
+  --text-faint: #565d66;
+  --accent: #b8c4cf;       /* brushed steel */
+  --stripe-blue: #1c5eaa;
+  --stripe-violet: #5b3a8f;
+  --stripe-red: #a3283c;
+
+  /* type */
+  --font-display: "Big Shoulders Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* layout */
+  --max-w: 1120px;
+  --pad: clamp(20px, 5vw, 64px);
+  --radius: 3px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: dark; }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+/* signature: thin tri-stripe, used once per page */
+.stripe {
+  height: 3px;
+  display: flex;
+  width: 100%;
+}
+.stripe span { flex: 1; }
+.stripe span:nth-child(1) { background: var(--stripe-blue); }
+.stripe span:nth-child(2) { background: var(--stripe-violet); }
+.stripe span:nth-child(3) { background: var(--stripe-red); }
+
+/* ---------- header / nav ---------- */
+header.site-head {
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(11, 13, 16, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 20;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.wordmark span { color: var(--text-faint); }
+
+nav.primary { display: flex; gap: 28px; }
+nav.primary a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+nav.primary a:hover,
+nav.primary a[aria-current="page"] {
+  color: var(--text);
+  border-bottom-color: var(--stripe-blue);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+}
+
+@media (max-width: 720px) {
+  nav.primary {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 16px;
+  }
+  nav.primary.open { display: flex; }
+  .nav-toggle { display: inline-block; }
+}
+
+/* ---------- readout strip (build-sheet motif) ---------- */
+.readout {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--bg-elevated);
+}
+.readout-track {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  padding: 9px 0;
+  animation: scroll-left 32s linear infinite;
+}
+.readout-track span {
+  padding: 0 22px;
+  border-right: 1px solid var(--border);
+}
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .readout-track { animation: none; }
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding-top: clamp(56px, 10vw, 108px);
+  padding-bottom: clamp(48px, 8vw, 88px);
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stripe-blue);
+  margin-bottom: 18px;
+}
+h1.hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(52px, 9vw, 118px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+  text-transform: uppercase;
+}
+.hero-sub {
+  max-width: 540px;
+  color: var(--text-muted);
+  font-size: 17px;
+  margin: 0 0 36px;
+}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+.btn-ghost:hover { border-color: var(--text-muted); }
+
+/* ---------- section scaffolding ---------- */
+.section { padding-top: clamp(48px, 7vw, 84px); padding-bottom: clamp(48px, 7vw, 84px); }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+h2.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 40px);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ---------- cards: updates feed ---------- */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.card {
+  background: var(--bg-elevated);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.tag {
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+.tag-car { border-color: var(--stripe-blue); color: #7fb0e0; }
+.tag-life { border-color: var(--stripe-red); color: #e08a97; }
+.card h3 { margin: 0; font-size: 19px; font-weight: 600; }
+.card p { margin: 0; color: var(--text-muted); font-size: 14.5px; }
+
+/* ---------- spec sheet (car page) ---------- */
+.spec-sheet {
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.spec-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  gap: 16px;
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-key {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.spec-val { font-size: 15px; }
+@media (max-width: 560px) {
+  .spec-row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+.figure {
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  padding: var(--pad);
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ---------- footer ---------- */
+footer.site-foot {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  padding-bottom: 28px;
+  margin-top: 40px;
+}
+.foot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+}
